@@ -11,9 +11,8 @@ exports.getUsersNodes = ( req, res ) => {
   })
 }
 
-// TODO req.body needs more specifics
 exports.createNode = ( req, res ) => {
-  const newNode = new Node(req.body);
+  const newNode = new Node( { name: req.body.name, parentNodeId: req.body.parentNodeId, childrenId: [], userId: req.body.userId, isRoot: req.body.isRoot });
   newNode.save(( error, node ) => {
     if (error){
       res.send(error);
@@ -23,9 +22,8 @@ exports.createNode = ( req, res ) => {
   })
 }
 
-// TODO req.body needs more specifics
 exports.updateNode = ( req, res ) => {
-    Node.findOneAndUpdate({ _id: req.params.nodeId }, req.body, (error, node) => {
+    Node.findOneAndUpdate({ _id: req.params.nodeId }, { name: req.body.name }, (error, node) => {
       if(error){
         res.send(error);
       }
@@ -33,7 +31,6 @@ exports.updateNode = ( req, res ) => {
       res.send(node);
     });
 }
-
 
 exports.deleteNode = ( req, res ) => {
   Node.deleteOne({ _id: req.params.nodeId}, (error) => {
@@ -45,5 +42,15 @@ exports.deleteNode = ( req, res ) => {
       message: "Node sucessfully deleted",
       _id: res.params.nodeId
     })
+  })
+}
+
+exports.addChildId = ( req, res ) => {
+  Node.findOneAndUpdate({ _id: req.params.nodeId }, { $addToSet: { childrenId: req.body.childId }}, (error, user) => {
+    if(error){
+      res.send(error);
+    }
+
+    res.send(user);
   })
 }

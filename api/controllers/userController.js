@@ -6,7 +6,16 @@ exports.createUser = ( req, res ) => {
 
   const urlname = req.body.username.replace(new RegExp(" ", "g"), "-").toLowerCase();
 
-  const user = new User ({ username: req.body.username, urlname, email: req.body.email, password: req.body.password, isAdmin: false, nodeIds: [], tagIds: [], glossaryIds: [] });
+  const user = new User ({
+    username: req.body.username,
+    urlname,
+    email: req.body.email,
+    password: req.body.password,
+    isAdmin: false,
+    nodeIds: [],
+    tagIds: [],
+    glossaryIds: []
+  });
 
   user.save(( error, user ) => {
     if (error){
@@ -45,5 +54,35 @@ exports.validateUser = ( req, res ) => {
         res.json({ status: "incorrect", message: "Not your data", data: null })
       }
     }
+  })
+}
+
+exports.addTagId = ( req, res ) => {
+  User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { tagIds: req.body.tagId }}, (error, user) => {
+    if(error){
+      res.send(error);
+    }
+
+    res.send(user);
+  })
+}
+
+exports.addNodeId = ( req, res ) => {
+  User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { nodeIds: req.body.nodeId }}, (error, user) => {
+    if(error){
+      res.send(error);
+    }
+
+    res.send(user);
+  })
+}
+
+exports.addGlossaryId = ( req, res ) => {
+  User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { glossaryIds: req.body.glossaryId }}, (error, user) => {
+    if(error){
+      res.send(error);
+    }
+
+    res.send(user);
   })
 }

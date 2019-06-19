@@ -3,7 +3,7 @@ const tagBuilder = require('../controllers/tagController');
 const userBuilder = require('../controllers/userController');
 const nodeBuilder = require('../controllers/nodeController');
 
-
+// TODO REDO ALL OF THIS IN CORRECT ORDER MAKE A LIST OF ALL ROUTES
 module.exports = (app) => {
   app
     .route('/signup')
@@ -38,23 +38,24 @@ module.exports = (app) => {
 
   app
     .route('/tag/:tagId')
-    .get(/* TODO search for glossaries assosiated with the tag */)
+    .get(tagBuilder.getTag)
     .put(tagBuilder.updateTag)
     .delete(tagBuilder.deleteTag)
 
   app
     .route('/user/:userId/glossary')
-    .post(/* TODO user creates a glossary page */)
+    .get(glossaryBuilder.getUsersGlossaries)
+    .post(glossaryBuilder.createGlossary)
 
   app
     .route('/glossary/:glossaryId')
-    .get(/* TODO get glossary info */)
-    .put( /* TODO update glossary */)
-    .delete( /* TODO delete Glossary */)
+    .get(glossaryBuilder.getGlossary)
+    .put(glossaryBuilder.updateGlossary)
+    .delete(glossaryBuilder.deleteGlossary)
 
   app
     .route('/glossary/:glossaryId/tag')
-    .get(/* TODO maybe grab the tags per glossary this way? */)
+    .get(tagBuilder.getGlossaryTags)
 
 }
 

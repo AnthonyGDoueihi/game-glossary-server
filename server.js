@@ -11,6 +11,8 @@ global.Node = require('./api/models/nodeModels');
 global.Tag = require('./api/models/tagModels');
 global.User = require('./api/models/userModels');
 
+const routes = require('./api/routes/glossaryRoutes');
+
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 mongoose.connect(
@@ -18,7 +20,7 @@ mongoose.connect(
   { useNewUrlParser: true }
 )
 
-const PORT = process.end.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const server = express();
 server.set('secretKey', SECRET_KEY);

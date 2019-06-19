@@ -13,20 +13,19 @@ const GlossarySchema = new Schema({
       required: "Glossary needs a title."
     },
     content: {
-      {
-        style: {
-          type: String,
-          require: "Needs a style, image or text";
-        },
-        content: {
-          type: String,
-        },
-        header: {
-          type: String,
-          require: "Needs a header"
-        }
+      style: {
+        type: String,
+        require: "Needs a style, image or text"
+      },
+      content: {
+        type: String,
+      },
+      header: {
+        type: String,
+        require: "Needs a header"
       }
     },
+
     userId: {
       type: String,
       required: "Glossary needs a user"
@@ -42,4 +41,4 @@ const GlossarySchema = new Schema({
   { collection: 'glossary' }
 );
 
-module.exports = mongoose.model('Glossary', GloassarySchema);
+module.exports = mongoose.model('Glossary', GlossarySchema);

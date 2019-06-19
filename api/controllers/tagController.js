@@ -11,9 +11,28 @@ exports.getUsersTags = ( req, res ) => {
   })
 }
 
-// TODO req.body needs more specifics
+exports.getGlossaryTags = ( req, res ) => {
+  Tag.find({ glossaryIds: req.params.glossaryId }, (error, tags) => {
+    if (error){
+      res.send(error);
+    }
+
+    res.json(tags);
+  })
+}
+
+exports.getTag = ( req, res ) => {
+  Tag.findOne({ userId: req.params.userId, _id: req.params.tagId }, (error, tag) => {
+    if (error){
+      res.send(error);
+    }
+
+    res.json(tag);
+  })
+}
+
 exports.createTag = ( req, res ) => {
-  const newTag = new Tag(req.body);
+  const newTag = new Tag({ userId: req.body.userId, name: req.body.name, glossaryIds: [] });
   newTag.save(( error, tag ) => {
     if (error){
       res.send(error);
@@ -23,9 +42,8 @@ exports.createTag = ( req, res ) => {
   })
 }
 
-// TODO req.body needs more specifics
 exports.updateTag = ( req, res ) => {
-    Tag.findOneAndUpdate({ _id: req.params.tagId }, req.body, (error, tag) => {
+    Tag.findOneAndUpdate({ _id: req.params.tagId }, { name: req.body.name  }, (error, tag) => {
       if(error){
         res.send(error);
       }
@@ -33,7 +51,6 @@ exports.updateTag = ( req, res ) => {
       res.send(tag);
     });
 }
-
 
 exports.deleteTag = ( req, res ) => {
   Tag.deleteOne({ _id: req.params.tagId}, (error) => {
@@ -45,5 +62,15 @@ exports.deleteTag = ( req, res ) => {
       message: "Tag sucessfully deleted",
       _id: res.params.tagId
     })
+  })
+}
+
+exports.addGlossaryId = ( req, res ) => {
+  Tag.findOneAndUpdate({ _id: req.params.tagId }, { $addToSet: { glossaryIds: req.body.glossaryId }}, (error, user) => {
+    if(error){
+      res.send(error);
+    }
+
+    res.send(user);
   })
 }
