@@ -25,15 +25,6 @@ const UserSchema = new Schema({
     isAdmin: {
       type: Boolean,
       required: "You're probably not an admin."
-    },
-    tagIds: {
-      type: [String]
-    },
-    nodeIds: {
-      type: [String]
-    },
-    glossaryIds: {
-      type: [String]
     }
   },
   { collection: 'user' }

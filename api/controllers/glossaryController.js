@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const Glossary = mongoose.model('Glossary');
 
-exports.getUsersGlossaries = ( req, res ) => {
-  Glossary.find({ userId: req.params.userId }, (error, glossaries) => {
-    if (error){
-      res.send(error);
-    }
-
-    res.json(glossaries);
-  })
-}
+// exports.getUsersGlossaries = ( req, res ) => {
+//   Glossary.find({ userId: req.params.userId }, (error, glossaries) => {
+//     if (error){
+//       res.send(error);
+//     }
+//
+//     res.json(glossaries);
+//   })
+// }
 
 exports.getGlossary = ( req, res ) => {
   Glossary.findOne({ userId: req.params.userId, _id: req.params.glossaryId }, (error, tag) => {

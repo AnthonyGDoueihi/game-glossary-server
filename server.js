@@ -20,11 +20,10 @@ mongoose.connect(
   { useNewUrlParser: true }
 )
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 const server = express();
 server.set('secretKey', SECRET_KEY);
-
 
 server.use(cors());
 server.use(bodyParser.urlencoded({extended: true}));

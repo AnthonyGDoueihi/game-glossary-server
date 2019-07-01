@@ -17,13 +17,13 @@ exports.createUser = ( req, res ) => {
     glossaryIds: []
   });
 
-  user.save(( error, user ) => {
+  user.save( ( error, user ) => {
     if (error){
       res.send(error);
     }
 
     res.json(user);
-  })
+  });
 }
 
 exports.authenticateUser = ( req, res ) => {
@@ -34,7 +34,7 @@ exports.authenticateUser = ( req, res ) => {
       if ( user.verifyPasswordSync( req.body.password ) ){
         const token = jwt.sign({ id: user._id, urlname: user.urlname }, req.app.get('secretKey'), { expiresIn: '10 days' });
 
-        res.json({ status: "success", message: "user found!!!", data: { user:  userInfo, token: token }});
+        res.json({ status: "success", message: "user found!!!", data: { user:  user, token: token }});
 
       }else{
         res.json({ status: "error", message: "Invalid email/password!!!", data: null });
@@ -42,6 +42,18 @@ exports.authenticateUser = ( req, res ) => {
     }
   })
 }
+
+// exports.getUserId = ( req, res ) => {
+//   User.findOne( { urlname: req.params.urlname }, (error, user) => {
+//     if(error){
+//       res.send(error)
+//     }
+//
+//     res.json({
+//       id: user._id
+//     })
+//   })
+// }
 
 exports.validateUser = ( req, res ) => {
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), ( error, decode ) => {

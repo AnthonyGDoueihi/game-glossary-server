@@ -2,6 +2,21 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+const ContentSchema = new Schema({
+  style: {
+    type: String,
+    require: "Needs a style, image or text"
+  },
+  content: {
+    type: String,
+  },
+  header: {
+    type: String,
+    require: "Needs a header"
+  }
+});
+
+
 const GlossarySchema = new Schema({
     title: {
       type: String,
@@ -12,20 +27,7 @@ const GlossarySchema = new Schema({
       type: String,
       required: "Glossary needs a title."
     },
-    content: {
-      style: {
-        type: String,
-        require: "Needs a style, image or text"
-      },
-      content: {
-        type: String,
-      },
-      header: {
-        type: String,
-        require: "Needs a header"
-      }
-    },
-
+    content: [ContentSchema],
     userId: {
       type: String,
       required: "Glossary needs a user"

@@ -14,6 +14,10 @@ const TagSchema = new Schema({
     },
     glossaryIds: {
       type: [String]
+    },
+    userId: {
+      type: String,
+      required: "Tag needs a user"
     }
   },
   { collection: 'tag' }
